@@ -1,0 +1,47 @@
+<!Doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Se unen a una banda</title>
+        <!--Bostrap Css-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style_inicio.css') }}">
+    </head>
+    <body class="container mt-1">
+        <nav class="navbar">
+            <div class="container-fluid">
+                <h3 style="margin-left: 200px; margin-top: 30px;">Sigue el camino del rock !!!</h3>
+                <a href="/misbandas">Mis Bandas</a>
+                <a href="/dashboard/{{session['user_id']}}">Dashboard</a>
+                <a href="/clearsession" class="btn btn-danger" style="margin-right: 200px;">Logout</a>
+            </div>
+        </nav>
+        <div class="row mt-5">
+            <div class="col-4 me-5">
+                {% for banda in bandas_con_usuarios %}
+                    {% if session['user_id'] == banda.usuario_id %}
+                <form action="/editar/banda/{{banda.id}}" method="post">
+                    <h3 class="text-center">Editar Banda {{ banda['nombre_banda'] }}</h3>
+                <div class="mb-3">
+                    <label for="nombre" class="form-label fw-bold" style="color: #c17e00;">Nombre Banda</label>
+                    <input type="text" class="form-control border border-dark" id="nombre" name="nombre_banda" value="{{ banda['nombre_banda'] }}" >
+                </div>
+                <div class="mb-3">
+                    <label for="genero" class="form-label fw-bold" style="color: #c17e00;">Genero Musical</label>
+                    <input type="text" class="form-control border border-dark" id="apellido" name="genero_musical" value="{{ banda['genero_musical'] }}">
+                </div>
+                <div class="mb-3">
+                    <label for="ciudad" class="form-label fw-bold" style="color: #c17e00">Ciudad de Origen</label>
+                    <input type="text" class="form-control border border-dark" name="ciudad_origen" value="{{ banda['ciudad_origen'] }}">
+                </div>
+                <input type="hidden" value="{{session['user_id']}}" name="usuario_id">
+                <button type="submit" class="btn btn-success">Editar</button>
+                </form>
+                {% endif %}
+                {% endfor %}
+            </div>   
+        <!--Boostrap Js-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+    </body>
+</html>

@@ -1,0 +1,48 @@
+<!Doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Se unen a una banda</title>
+        <!--Bostrap Css-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style_inicio.css') }}">
+    </head>
+    <body class="container mt-1">
+        <nav class="navbar">
+            <div class="container-fluid">
+                <h3 style="margin-left: 200px; margin-top: 30px;">Sigue el camino del rock !!!</h3>
+                <a href="/dashboard/{{session['user_id']}}">Dashboard</a>
+                <a href="/clearsession" class="btn btn-danger" style="margin-right: 200px;">Logout</a>
+            </div>
+        </nav>
+        <div>
+            <table class="table table-borderless">
+                <thead>
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for bandas in banda_usuario %}
+                        {% if bandas.usuario_id == session['user_id'] %}
+                <tr>
+                    <td scope="row">{{ bandas['nombre_banda'] }}</td>
+                    <td>{{bandas.usuario[0].nombre}} {{bandas.usuario[0].apellido}}</td>
+                    <td>{{ bandas['genero_musical']}}</td>
+                    <td>
+                <a href="/destroy">Delete</a> | <a href="/editar/{{session['user_id']}}">Edit</a>
+                            {% endif %}
+                    </td>
+                </tr>
+                        {% endfor %}
+                </tbody>
+            </table>
+        </div>   
+        <!--Boostrap Js-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+    </body>
+</html>

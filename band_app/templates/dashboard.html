@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_inicio.css') }}">
+    <title>Bienvenido</title>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container-fluid">
+            <h3 style="margin-left: 150px; margin-top: 10px;">Sigue el camino del rock  ¡¡¡{{obtener_usuario.nombre}}!!!</h3>
+            <a href="/misbandas">Mis Bandas</a>
+            <a href="/banda">Nueva Banda</a>
+            <a href="/clearsession" class="btn btn-danger" style="margin-right: 350px;">Logout</a>
+        </div>
+    </nav>
+    <!--{% for usuario in todos_usuarios %}
+    #<p>{{usuario.nombre}}</p>
+    {% endfor %}-->
+    <div class="container">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Nombre Banda</th>
+                <th scope="col">Fundador</th>
+                <th scope="col">Genero Musical</th>
+                <th scope="col">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for bandas in usuarios_con_bandas %}
+        <tr>
+            <td>{{ bandas['nombre_banda'] }}</td>
+            <td>{{bandas.usuario[0].nombre}} {{bandas.usuario[0].apellido}}</td>
+            <td>{{ bandas['genero_musical']}}</td>
+            <td>
+                {% if bandas.usuario_id == session['user_id'] %}
+                <a href="/destroy">Eliminar</a> | <a href="/editar/{{session['user_id']}}">Editar</a>
+                {% endif %}
+            </td>
+        </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+</body>
+</html>
